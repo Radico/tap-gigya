@@ -192,10 +192,16 @@ class CampaignsStream(Stream):
       ]
     },
     "media_urls": {
-      "type": [
-        "null",
-        "array"
-      ]
+        "items": {
+            "type": [
+                "null",
+                "string"
+            ]
+        },
+        "type": [
+            "null",
+            "array"
+        ]
     },
     "send_to_inboxed": {
       "type": [
