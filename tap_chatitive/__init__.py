@@ -1,7 +1,21 @@
 from tap_kit import TapExecutor, BaseClient, main_method
 
 
-from tap_chatitive.streams import STREAMS
+from .tags import TagsStream
+from .campaigns import CampaignsStream
+from .channels import ChannelsStream
+from .transports import TransportsStream
+from .subscribers import SubscribersStream
+
+
+STREAMS = [
+    TagsStream,
+    CampaignsStream,
+    ChannelsStream,
+    TransportsStream,
+    SubscribersStream,
+]
+
 
 REQUIRED_CONFIG_KEYS = ["start_date", 'username', 'password']
 
