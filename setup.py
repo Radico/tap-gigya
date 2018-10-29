@@ -3,7 +3,7 @@ from setuptools import setup
 
 setup(
     name="tap-chatitive",
-    version="0.1.0",
+    version="0.1.1",
     description="Singer.io tap for extracting data",
     author="Simon Data",
     url="http://simondata.com",
