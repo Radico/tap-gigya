@@ -14,6 +14,9 @@ setup(
         'requests==2.18.4',
         "pendulum==1.2.0",
     ],
+    dependency_links=[
+        "https://github.com/Radico/tap-kit/archive/e1a4d69dae9b63b34bafd8b4455b041d15abe2dd.zip",
+    ],
     entry_points="""
     [console_scripts]
     tap-chatitive=tap_chatitive:main
