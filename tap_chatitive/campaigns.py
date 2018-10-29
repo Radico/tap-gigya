@@ -193,7 +193,8 @@ class CampaignsStream(Stream):
     },
     "media_urls": {
       "type": [
-        "null"
+        "null",
+        "array"
       ]
     },
     "send_to_inboxed": {

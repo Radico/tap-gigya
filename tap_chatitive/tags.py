@@ -55,6 +55,12 @@ class TagsStream(Stream):
         "string"
       ]
     },
+    "channel_sid": {
+      "type": [
+        "null",
+        "string"
+      ]
+    },
     "deleted_at": {
       "type": [
         "null",
