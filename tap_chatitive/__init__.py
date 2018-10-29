@@ -1,6 +1,6 @@
 from tap_kit import TapExecutor, BaseClient, main_method
 
-from .streams import STREAMS
+from tap_chatitive.streams import STREAMS
 
 REQUIRED_CONFIG_KEYS = ["start_date", 'username', 'password']
 
