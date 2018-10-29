@@ -13,10 +13,10 @@ setup(
         "singer-python==5.2.0",
         'requests==2.18.4',
         "pendulum==1.2.0",
-        "tap-kit"
+        "tap-kit==0.1.0"
     ],
     dependency_links=[
-        "https://github.com/Radico/tap-kit/tarball/master",
+        "https://github.com/Radico/tap-kit/tarball/master#egg=tap-kit-0.1.0",
     ],
     entry_points="""
     [console_scripts]
