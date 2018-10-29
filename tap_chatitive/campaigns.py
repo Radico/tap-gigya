@@ -94,8 +94,7 @@ class CampaignsStream(Stream):
       "type": [
         "null",
         "string"
-      ],
-      "format": "date-time"
+      ]
     },
     "results": {
       "items": {
