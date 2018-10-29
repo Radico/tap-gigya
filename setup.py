@@ -13,6 +13,7 @@ setup(
         "singer-python==5.2.0",
         'requests==2.18.4',
         "pendulum==1.2.0",
+        "tap-kit"
     ],
     dependency_links=[
         "https://github.com/Radico/tap-kit/archive/e1a4d69dae9b63b34bafd8b4455b041d15abe2dd.zip",
