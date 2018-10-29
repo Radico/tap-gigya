@@ -23,5 +23,8 @@ setup(
     tap-chatitive=tap_chatitive:main
     """,
     packages=["tap_chatitive"],
+    package_data = {
+        "streams": ["tap_chatitive/streams/*.py"]
+    },
     include_package_data=True,
 )
