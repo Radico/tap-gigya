@@ -74,7 +74,7 @@ class Stream:
                                         self.stream,
                                         self.stream_metadata.get(
                                             'replication-key'),
-                                        safe_to_iso8601(last_updated))
+                                        last_updated)
         singer.write_state(self.state)
 
     def update_start_date_bookmark(self):
@@ -115,7 +115,7 @@ class Stream:
     def generate_catalog(self):
         schema = self.schema
         mdata = singer.metadata.new()
-        
+
         self.build_base_metadata(mdata)
         
         for field_name, field_schema in schema.get('properties').items():

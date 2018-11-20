@@ -2,6 +2,7 @@ from .client import BaseClient
 from .utils import main_method
 from .executor import TapExecutor
 from .users import UsersStream
+
 from .utils import (
     stream_is_selected, transform_write_and_count, safe_to_iso8601,
     format_last_updated_for_request, get_res_data
@@ -32,8 +33,8 @@ class GigyaTap(TapExecutor):
     auth_type = 'basic_key'
     replication_key_format = 'timestamp'
 
-    def build_params(self, stream, last_updated=0):
-        query = "select  emails, data.subscriptions, UID, lastUpdatedTimestamp  from accounts where lastUpdatedTimestamp > {}".format(1537655907126)
+    def build_params(self, stream, last_updated):
+        query = "select  emails, data.subscriptions, UID, lastUpdatedTimestamp from accounts where lastUpdatedTimestamp > {}".format(1542747430000)
 
         return {
             'query': query,
@@ -51,6 +52,8 @@ class GigyaTap(TapExecutor):
 
         last_updated = format_last_updated_for_request(
             stream.update_and_return_bookmark(), self.replication_key_format)
+
+        
         request_config = {
             'url': self.generate_api_url(stream),
             'headers': self.build_headers(),
@@ -58,7 +61,6 @@ class GigyaTap(TapExecutor):
             'run': True
         }
 
-        print('hey')
         LOGGER.info("Extracting %s since %s" % (stream, last_updated))
 
         total_contacts_pulled = 0
@@ -69,13 +71,14 @@ class GigyaTap(TapExecutor):
 
             res = self.client.make_request(request_config)
 
-            records = get_res_data(res.json(), self.get_res_json_key(stream))
-
+            records = res.json()['results']
 
             # transform_write_and_count(stream, records)
 
             total_contacts_pulled += res.json()['objectsCount']
             total_count = res.json()['totalCount']
+
+            last_updated = self.get_max_last_updated(last_updated, records)
 
             request_config = self.update_for_next_call(
                 res,
@@ -84,7 +87,13 @@ class GigyaTap(TapExecutor):
             )
 
             LOGGER.info("Pulled %s objects out of %s" % (total_contacts_pulled, total_count))
-
+        
+        LOGGER.info('MAX UPDATED: {}'.format(last_updated))
+        return last_updated
+    
+    def get_max_last_updated(self, last_updated, records):
+        for r in records:
+            last_updated = max(last_updated, r['lastUpdatedTimestamp'])
         return last_updated
 
     def update_for_next_call(self, res, request_config, last_updated=None):

@@ -150,8 +150,6 @@ class TapExecutor:
 
             res = self.client.make_request(request_config)
 
-            import ipdb; ipdb.set_trace()
-
             records = get_res_data(res.json(), self.get_res_json_key(stream))
 
             if self.should_write(records, stream, last_updated):
@@ -169,7 +167,7 @@ class TapExecutor:
                 last_updated=last_updated
             )
 
-        return last_updated
+        return str(last_updated)
 
     def update_for_next_call(self, res, request_config, last_updated=None):
         if self.pagination_type == 'next':
@@ -192,6 +190,7 @@ class TapExecutor:
         if stream.is_incremental:
             stream.set_stream_state(self.state)
             last_updated = self.call_incremental_stream(stream)
+
             stream.update_bookmark(last_updated)
 
         else:
