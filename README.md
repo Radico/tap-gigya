@@ -1,2 +1,2 @@
-# tap-chatitive
-Singer tap for extracting from Chatitive API (https://essential.to/docs/)
+# tap-gigya
+Singer tap for extracting from Gigya API 
