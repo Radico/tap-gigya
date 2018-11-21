@@ -44,6 +44,8 @@ class BaseClient:
         if response.status_code in [429, 503]:
             raise RateLimitException()
 
+
+
         response.raise_for_status()
 
         return response

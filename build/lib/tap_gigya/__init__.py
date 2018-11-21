@@ -34,8 +34,8 @@ class GigyaTap(TapExecutor):
     replication_key_format = 'timestamp'
 
     def build_params(self, stream, last_updated):
-        query = "select  emails,\n data.subscriptions,\n UID,\n lastUpdatedTimestamp\n from accounts\n where lastUpdatedTimestamp > {}".format(last_updated)
-        LOGGER.info('\nQuery running is: {}\n'.format(query))
+        query = "select  emails,\n data.subscriptions,\n UID,\n lastUpdatedTimestamp\n from accounts\n where lastUpdatedTimestamp > {} limit 10000".format(last_updated)
+        LOGGER.info('\nQuery running is:\n {}'.format(query))
         return {
             'query': query,
             'secret': stream.config['api_secret'],
@@ -98,6 +98,8 @@ class GigyaTap(TapExecutor):
     def update_for_next_call(self, res, request_config, last_updated=None):
 
         if 'nextCursorId' not in res.json():
+            LOGGER.info('Ending now, last response json is:')
+            LOGGER.info(res.json())
             request_config['run'] = False
             return request_config
 
