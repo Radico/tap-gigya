@@ -4,7 +4,7 @@ import singer
 
 class UsersStream(Stream):
 
-    stream = 'users'
+    stream = 'ids.search'
 
     meta_fields = dict(
         key_properties=['id'],

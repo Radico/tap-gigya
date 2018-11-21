@@ -24,7 +24,7 @@ STREAMS = [
 ]
 
 
-REQUIRED_CONFIG_KEYS = ['secret', 'apiKey', 'UID', 'format']
+REQUIRED_CONFIG_KEYS = ['api_secret', 'api_key', 'user_id', 'format']
 
 
 class GigyaTap(TapExecutor):
@@ -34,13 +34,13 @@ class GigyaTap(TapExecutor):
     replication_key_format = 'timestamp'
 
     def build_params(self, stream, last_updated):
-        query = "select  emails, data.subscriptions, UID, lastUpdatedTimestamp from accounts where lastUpdatedTimestamp > {}".format(1542747430000)
-
+        query = "select  emails,\n data.subscriptions,\n UID,\n lastUpdatedTimestamp\n from accounts\n where lastUpdatedTimestamp > {}".format(last_updated)
+        LOGGER.info('Query running is: {}'.format(query))
         return {
             'query': query,
-            'secret': stream.config['secret'],
-            'apiKey': stream.config['apiKey'],
-            'UID': stream.config['UID'],
+            'secret': stream.config['api_secret'],
+            'apiKey': stream.config['api_key'],
+            'UID': stream.config['user_id'],
             'format': stream.config['format'],
             'openCursor': True
         }
@@ -50,8 +50,7 @@ class GigyaTap(TapExecutor):
         Method to call all incremental synced streams
         """
 
-        last_updated = format_last_updated_for_request(
-            stream.update_and_return_bookmark(), self.replication_key_format)
+        last_updated = stream.update_and_return_bookmark()
 
         
         request_config = {
@@ -70,7 +69,7 @@ class GigyaTap(TapExecutor):
         while request_config['run']:
 
             res = self.client.make_request(request_config)
-
+            
             records = res.json()['results']
 
             # transform_write_and_count(stream, records)
@@ -93,7 +92,7 @@ class GigyaTap(TapExecutor):
     
     def get_max_last_updated(self, last_updated, records):
         for r in records:
-            last_updated = max(last_updated, r['lastUpdatedTimestamp'])
+            last_updated = max(int(last_updated), r['lastUpdatedTimestamp'])
         return last_updated
 
     def update_for_next_call(self, res, request_config, last_updated=None):
