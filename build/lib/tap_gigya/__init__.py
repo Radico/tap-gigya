@@ -24,7 +24,7 @@ STREAMS = [
 ]
 
 
-REQUIRED_CONFIG_KEYS = ['api_secret', 'api_key', 'user_id', 'format']
+REQUIRED_CONFIG_KEYS = ['api_secret', 'api_key', 'user_id']
 
 
 class GigyaTap(TapExecutor):
@@ -41,7 +41,7 @@ class GigyaTap(TapExecutor):
             'secret': stream.config['api_secret'],
             'apiKey': stream.config['api_key'],
             'UID': stream.config['user_id'],
-            'format': stream.config['format'],
+            'format': 'json',
             'openCursor': True
         }
 
