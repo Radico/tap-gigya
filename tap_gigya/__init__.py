@@ -42,7 +42,8 @@ class GigyaTap(TapExecutor):
             'apiKey': stream.config['api_key'],
             'UID': stream.config['user_id'],
             'format': 'json',
-            'openCursor': True
+            'openCursor': True,
+            'httpStatusCodes': True
         }
 
     def call_incremental_stream(self, stream):
