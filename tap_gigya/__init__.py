@@ -98,6 +98,8 @@ class GigyaTap(TapExecutor):
     def update_for_next_call(self, res, request_config, last_updated=None):
 
         if 'nextCursorId' not in res.json():
+            LOGGER.info('Ending now, last response json is:')
+            LOGGER.info(res.json())
             request_config['run'] = False
             return request_config
 
