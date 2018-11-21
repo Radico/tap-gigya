@@ -35,7 +35,7 @@ class GigyaTap(TapExecutor):
 
     def build_params(self, stream, last_updated):
         query = "select  emails,\n data.subscriptions,\n UID,\n lastUpdatedTimestamp\n from accounts\n where lastUpdatedTimestamp > {}".format(last_updated)
-        LOGGER.info('Query running is: {}'.format(query))
+        LOGGER.info('\nQuery running is: {}\n'.format(query))
         return {
             'query': query,
             'secret': stream.config['api_secret'],
@@ -72,7 +72,7 @@ class GigyaTap(TapExecutor):
             
             records = res.json()['results']
 
-            # transform_write_and_count(stream, records)
+            transform_write_and_count(stream, records)
 
             total_contacts_pulled += res.json()['objectsCount']
             total_count = res.json()['totalCount']
@@ -88,7 +88,7 @@ class GigyaTap(TapExecutor):
             LOGGER.info("Pulled %s objects out of %s" % (total_contacts_pulled, total_count))
         
         LOGGER.info('MAX UPDATED: {}'.format(last_updated))
-        return last_updated
+        return str(last_updated)
     
     def get_max_last_updated(self, last_updated, records):
         for r in records:

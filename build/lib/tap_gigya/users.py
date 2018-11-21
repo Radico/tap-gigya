@@ -32,7 +32,19 @@ class UsersStream(Stream):
             "null",
             "string"
             ]
-            },    
+            },
+        "data": {
+          "type": [
+            "null",
+            "string"
+            ]
+            }, 
+        "lastUpdatedTimestamp": {
+          "type": [
+            "null",
+            "string"
+            ]
+            }, 
       }
     }
 
