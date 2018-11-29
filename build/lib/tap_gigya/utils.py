@@ -1,6 +1,5 @@
 import singer
 import pendulum
-import json
 
 
 LOGGER = singer.get_logger()
@@ -25,9 +24,6 @@ def run_tap(config_keys, tap, client, streams):
 
 # Writing records
 def transform_write_and_count(stream, records):
-
-    # records = [json.dumps(r) for r in records]
-
     write_records(
         stream.stream,
         [stream.transform_record(rec) for rec in records]
