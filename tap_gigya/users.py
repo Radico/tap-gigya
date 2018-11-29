@@ -16,35 +16,7 @@ class UsersStream(Stream):
 
     schema = \
     {
-      "type": [
-        "null",
-        "object"
-      ],
       "properties": {
-        "UID": {
-          "type": [
-            "null",
-            "string"
-            ]
-            },
-        "emails": {
-          "type": [
-            "null",
-            "string"
-            ]
-            },
-        "data": {
-          "type": [
-            "null",
-            "string"
-            ]
-            }, 
-        "lastUpdatedTimestamp": {
-          "type": [
-            "null",
-            "string"
-            ]
-            }, 
       }
     }
 

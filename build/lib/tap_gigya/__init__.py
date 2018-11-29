@@ -34,7 +34,7 @@ class GigyaTap(TapExecutor):
     replication_key_format = 'timestamp'
 
     def build_params(self, stream, last_updated):
-        query = "select  emails,\n data.subscriptions,\n UID,\n lastUpdatedTimestamp\n from accounts\n where lastUpdatedTimestamp > {} limit 10000".format(last_updated)
+        query = "select  emails,\n data,\n UID,\n lastUpdatedTimestamp\n from accounts\n where lastUpdatedTimestamp > {} \nlimit 10000".format(last_updated)
         LOGGER.info('\nQuery running is:\n {}'.format(query))
         return {
             'query': query,
@@ -42,7 +42,8 @@ class GigyaTap(TapExecutor):
             'apiKey': stream.config['api_key'],
             'UID': stream.config['user_id'],
             'format': 'json',
-            'openCursor': True
+            'openCursor': True,
+            'httpStatusCodes': True
         }
 
     def call_incremental_stream(self, stream):
