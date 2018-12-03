@@ -41,7 +41,7 @@ class BaseClient:
         with singer.metrics.Timer('request_duration', {}) as timer:
             response = self.requests_method(method, request_config, body)
 
-        if response.status_code in [429, 503]:
+        if response.status_code != 200:
             raise RateLimitException()
 
 
