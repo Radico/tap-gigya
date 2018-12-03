@@ -34,7 +34,7 @@ class GigyaTap(TapExecutor):
     replication_key_format = 'timestamp'
 
     def build_params(self, stream, last_updated):
-        query = "select  emails,\n data,\n UID,\n lastUpdatedTimestamp,\n profile.profileURL,\n profile.lastName,\n profile.gender,\n profile.timezone,\n profile.locale,\n profile.photoURL,\n profile.email,\n profile.thumbnailURL,\n profile.firstName from accounts\n where lastUpdatedTimestamp > {} \nlimit 10000".format(last_updated)
+        query = "select  emails,\n data,\n UID,\n lastUpdatedTimestamp,\n profile.profileURL,\n profile.lastName,\n profile.gender,\n profile.locale,\n profile.email,\n profile.firstName from accounts\n where lastUpdatedTimestamp > {} \nlimit 10000".format(last_updated)
         LOGGER.info('\nQuery running is:\n {}'.format(query))
         return {
             'query': query,
