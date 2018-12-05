@@ -79,7 +79,7 @@ class GigyaTap(TapExecutor):
             total_count = res.json()['totalCount']
 
             last_updated = self.get_max_last_updated(last_updated, records)
-            stream.update_bookmark(last_updated)
+            stream.update_bookmark(str(last_updated))
             
             request_config = self.update_for_next_call(
                 res,
