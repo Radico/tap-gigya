@@ -80,12 +80,16 @@ class GigyaTap(TapExecutor):
 
             last_updated = self.get_max_last_updated(last_updated, records)
             stream.update_bookmark(last_updated)
-
+            
             request_config = self.update_for_next_call(
                 res,
                 request_config,
                 last_updated=last_updated
             )
+
+            if total_contacts_pulled > 500000:
+                raise AttributeError('asdf')
+
             LOGGER.info("Pulled %s objects out of %s" % (total_contacts_pulled, total_count))
         
         LOGGER.info('MAX UPDATED: {}'.format(last_updated))
