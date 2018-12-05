@@ -87,7 +87,7 @@ class GigyaTap(TapExecutor):
                 last_updated=last_updated
             )
 
-            if total_contacts_pulled > 500000:
+            if total_contacts_pulled > 30000:
                 raise AttributeError('asdf')
 
             LOGGER.info("Pulled %s objects out of %s" % (total_contacts_pulled, total_count))
