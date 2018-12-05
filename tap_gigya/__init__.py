@@ -34,7 +34,7 @@ class GigyaTap(TapExecutor):
     replication_key_format = 'timestamp'
 
     def build_params(self, stream, last_updated):
-        query = "select  emails,\n data,\n UID,\n lastUpdatedTimestamp,\n profile.profileURL,\n profile.lastName,\n profile.gender,\n profile.locale,\n profile.email,\n profile.firstName from accounts\n where lastUpdatedTimestamp > {} \nlimit 10000".format(last_updated)
+        query = "select  emails,\n data,\n UID,\n lastUpdatedTimestamp,\n profile.profileURL,\n profile.lastName,\n profile.gender,\n profile.locale,\n profile.email,\n profile.firstName from accounts\n where lastUpdatedTimestamp > {} order by lastUpdatedTimestamp \nlimit 10000".format(last_updated)
         LOGGER.info('\nQuery running is:\n {}'.format(query))
         return {
             'query': query,
@@ -79,13 +79,13 @@ class GigyaTap(TapExecutor):
             total_count = res.json()['totalCount']
 
             last_updated = self.get_max_last_updated(last_updated, records)
+            stream.update_bookmark(last_updated)
 
             request_config = self.update_for_next_call(
                 res,
                 request_config,
                 last_updated=last_updated
             )
-
             LOGGER.info("Pulled %s objects out of %s" % (total_contacts_pulled, total_count))
         
         LOGGER.info('MAX UPDATED: {}'.format(last_updated))
