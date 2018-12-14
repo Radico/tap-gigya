@@ -28,13 +28,13 @@ REQUIRED_CONFIG_KEYS = ['api_secret', 'api_key', 'user_id']
 
 
 class GigyaTap(TapExecutor):
-    url = 'https://ids.eu1.gigya.com/'
+    url = 'https://accounts.eu1.gigya.com/'
     pagination_type = 'next'
     auth_type = 'basic_key'
     replication_key_format = 'timestamp'
 
     def build_params(self, stream, last_updated):
-        query = "select  emails,\n data,\n UID,\n lastUpdatedTimestamp,\n profile.profileURL,\n profile.lastName,\n profile.gender,\n profile.locale,\n profile.email,\n profile.firstName from accounts\n where lastUpdatedTimestamp > {} order by lastUpdatedTimestamp \nlimit 10000".format(last_updated)
+        query = "select emails,\n data,\n UID,\n subscriptions,\n lastUpdatedTimestamp,\n profile.profileURL,\n profile.lastName,\n profile.gender,\n profile.locale,\n profile.email,\n profile.firstName from emailAccounts\n where lastUpdatedTimestamp > {} order by lastUpdatedTimestamp \nlimit 10000".format(last_updated)
         LOGGER.info('\nQuery running is:\n {}'.format(query))
         return {
             'query': query,
