@@ -34,7 +34,40 @@ class GigyaTap(TapExecutor):
     replication_key_format = 'timestamp'
 
     def build_params(self, stream, last_updated):
-        query = "select emails,\n data,\n UID,\n subscriptions,\n lastUpdatedTimestamp,\n profile.profileURL,\n profile.lastName,\n profile.gender,\n profile.locale,\n profile.email,\n profile.firstName from emailAccounts\n where lastUpdatedTimestamp > {} order by lastUpdatedTimestamp \nlimit 10000".format(last_updated)
+        query = """
+            select created,
+            lastUpdatedTimestamp,
+            UID,
+            token,
+            profile.email,
+            profile.username,
+            profile.firstName,
+            profile.lastName,
+            profile.gender,
+            profile.birthDay,
+            profile.birthMonth,
+            profile.birthYear,
+            profile.city,
+            profile.zip,
+            data.country,
+            data.registerInstance,
+            data.lang,
+            data.lastVisitWebDate,
+            data.registeredDate,
+            data.registerVariant,
+            data.registerSource,
+            data.lastDownload.ip,
+            data.lastDownload.browserName,
+            subscriptions.softonicNewsletter.email.doubleOptin.status,
+            subscriptions.softonicNewsletter.email.isSubscribed,
+            subscriptions.softonicNewsletter.email.lastUpdatedSubscriptionState
+            subscriptions.solutionsNewsletter.email.doubleOptin.status,
+            subscriptions.solutionsNewsletter.email.isSubscribed,
+            subscriptions.solutionsNewsletter.email.lastUpdatedSubscriptionState
+            from emailAccounts
+            where lastUpdatedTimestamp > {}
+            order by lastUpdatedTimestamp
+            limit 10000""".format(last_updated)
         LOGGER.info('\nQuery running is:\n {}'.format(query))
         return {
             'query': query,
